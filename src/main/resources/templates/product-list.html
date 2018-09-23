@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <title>Products</title>
+</head>
+<body>
+<div class="container">
+  <nav class="navbar navbar-dark bg-dark row mb-3">
+    <span class="navbar-brand mb-0 h1">Products</span>
+    <a class="btn btn-light my-2 my-sm-0" th:href="@{/}"><i class="fa fa-home"></i></a>
+  </nav>
+  <form action="#" th:action="@{/products}" class="row mb-2">
+    <div class="input-group mb-3">
+      <input type="text" class="form-control" name="query" th:value="${searchRequest.query}">
+      <div class="input-group-append">
+        <button class="btn btn-secondary" type="submit"><i class="fa fa-search"></i></button>
+      </div>
+    </div>
+    <div class="input-group mb-3">
+      <div class="input-group-prepend">
+        <span class="input-group-text" style="width:100px;">Status</span>
+      </div>
+      <select class="custom-select" name="status">
+        <option th:value="${null}" th:selected="${searchRequest.status == null}">ALL</option>
+        <option th:each="status : ${statuses}" th:value="${status.serialize()}"
+                th:selected="${searchRequest.status == status.serialize()}">
+          <span th:text="${status.name.toUpperCase()}"></span>
+        </option>
+      </select>
+    </div>
+    <div class="input-group mb-3">
+      <div class="input-group-prepend">
+        <span class="input-group-text" style="width:100px;">Price</span>
+      </div>
+      <select class="custom-select" name="priceRange">
+        <option th:value="${null}" th:selected="${searchRequest.priceRange == null}">ALL</option>
+        <option th:each="priceRange : ${priceRanges}" th:value="${priceRange.serialize()}"
+                th:selected="${searchRequest.priceRange == priceRange.serialize()}">
+          <span th:text="${priceRange.from} + ' €' + ' - ' + ${priceRange.to} + ' €'"></span>
+        </option>
+      </select>
+    </div>
+    <div class="input-group mb-3">
+      <div class="input-group-prepend">
+        <span class="input-group-text" style="width:100px;">Category</span>
+      </div>
+      <select class="custom-select" name="category">
+        <option th:value="${null}" th:selected="${searchRequest.category == null}">ALL</option>
+        <option th:each="category : ${categories}" th:value="${category.serialize()}"
+                th:selected="${searchRequest.category == category.serialize()}">
+          <span th:text="${category.name}"></span>
+        </option>
+      </select>
+    </div>
+  </form>
+  <div th:if="${searchResults != null && searchResults.isEmpty()}">
+    <div class="row mb-2">
+      <div class="col text-center">
+        <button class="btn btn-link" disabled>No products found that match your query.</button>
+      </div>
+    </div>
+  </div>
+  <div th:if="${searchResults != null && !searchResults.isEmpty()}">
+    <div class="row mb-2">
+      <form action="#" th:action="@{/products}">
+        <button class="btn btn-secondary" th:disabled="${previousPage == null}">&laquo;</button>
+        <input type="hidden" name="query" th:value="${searchRequest.query}">
+        <input type="hidden" name="status" th:value="${searchRequest.status}">
+        <input type="hidden" name="priceRange" th:value="${searchRequest.priceRange}">
+        <input type="hidden" name="category" th:value="${searchRequest.category}">
+        <input type="hidden" name="page" th:value="${previousPage}">
+      </form>
+      <div class="col text-center">
+        <button class="btn btn-link" th:text="${pageInfo}" disabled></button>
+      </div>
+      <form action="#" th:action="@{/products}">
+        <button class="btn btn-secondary" th:disabled="${nextPage == null}">&raquo;</button>
+        <input type="hidden" name="query" th:value="${searchRequest.query}">
+        <input type="hidden" name="status" th:value="${searchRequest.status}">
+        <input type="hidden" name="priceRange" th:value="${searchRequest.priceRange}">
+        <input type="hidden" name="category" th:value="${searchRequest.category}">
+        <input type="hidden" name="page" th:value="${nextPage}">
+      </form>
+    </div>
+    <div class="row mb-2" th:each="searchResult : ${searchResults}">
+      <div class="card">
+        <div class="card-header">
+          <a href="#" th:href="@{/products/{id}(id=${searchResult.id})}" th:text="${searchResult.name}"></a>
+        </div>
+        <div class="card-body">
+          <p class="card-text" th:text="${searchResult.description}"></p>
+        </div>
+        <div class="card-body p-0">
+          <table class="table mb-0">
+            <tbody>
+            <tr>
+              <th scope="row" style="width:150px;">Status</th>
+              <td th:text="${searchResult.status.toUpperCase()}"></td>
+            </tr>
+            <tr>
+              <th scope="row" style="width:150px;">Price</th>
+              <td th:text="${searchResult.price + ' €'}"></td>
+            </tr>
+            <tr>
+              <th scope="row" style="width:150px;">Categories</th>
+              <td th:text="${searchResult.categories}"></td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

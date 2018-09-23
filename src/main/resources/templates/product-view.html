@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <title>Products</title>
+</head>
+<body>
+<div class="container">
+  <nav class="navbar navbar-dark bg-dark row mb-3">
+    <span class="navbar-brand mb-0 h1">Products</span>
+    <a class="btn btn-light my-2 my-sm-0" th:href="@{/}"><i class="fa fa-home"></i></a>
+  </nav>
+  <div class="card row">
+    <div class="card-header">
+      <span th:text="${searchResult.name}"></span>
+    </div>
+    <div class="card-body">
+      <p class="card-text" th:text="${searchResult.description}"></p>
+    </div>
+    <div class="card-body p-0">
+      <table class="table mb-0">
+        <tbody>
+        <tr>
+          <th scope="row" style="width:150px;">Status</th>
+          <td th:text="${searchResult.status.toUpperCase()}"></td>
+        </tr>
+        <tr>
+          <th scope="row" style="width:150px;">Price</th>
+          <td th:text="${searchResult.price + ' €'}"></td>
+        </tr>
+        <tr>
+          <th scope="row" style="width:150px;">Categories</th>
+          <td th:text="${searchResult.categories}"></td>
+        </tr>
+        <tr>
+          <th scope="row" style="width:150px;">Quantity</th>
+          <td th:text="${searchResult.quantity}"></td>
+        </tr>
+        <tr>
+          <th scope="row" style="width:150px;">Tags</th>
+          <td th:text="${searchResult.tags}"></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+</body>
+</html>
