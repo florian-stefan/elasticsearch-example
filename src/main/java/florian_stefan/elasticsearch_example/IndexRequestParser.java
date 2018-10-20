@@ -1,4 +1,4 @@
-package com.ebay.fstefan.product_index;
+package florian_stefan.elasticsearch_example;
 
 import static java.util.Collections.emptyList;
 import static java.util.stream.Collectors.joining;

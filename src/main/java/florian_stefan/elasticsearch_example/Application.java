@@ -1,4 +1,4 @@
-package com.ebay.fstefan.product_index;
+package florian_stefan.elasticsearch_example;
 
 import org.apache.http.HttpHost;
 import org.elasticsearch.client.RestClient;
