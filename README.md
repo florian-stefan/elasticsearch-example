@@ -1,4 +1,4 @@
-# Product Index
+# Elasticsearch Example
 
 This application demonstrates the basics of using the ElasticSearch client. After starting, the application checks if it has to create a new index. If that is the case, it reads the mapping from a file located on the classpath and programmatically creates a new index using that mapping. The application then executes a bulk index of example data that is also read from a file located on the classpath. When the index has been created, it is possible to execute search requests against it by using a simple web form.
 
